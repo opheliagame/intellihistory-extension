@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 
-const Timer = ({recording, hours, minutes, seconds}) => {
+const Timer = ({recording, hours, minutes, seconds}: {recording: boolean, hours: number, minutes: number, seconds: number}) => {
   if(recording === false) {
     return (
       <p>00:00:00</p>
@@ -18,7 +18,7 @@ const Timer = ({recording, hours, minutes, seconds}) => {
   )
 }
 
-const SessionForm = ({recording, handleSNameChange, beginSession, stopSession}) => {
+const SessionForm = ({recording, handleSNameChange, beginSession, stopSession}: {recording: boolean, handleSNameChange: any, beginSession: any, stopSession: any}) => {
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
     handleSNameChange(event.currentTarget.value)
   }
@@ -43,7 +43,7 @@ const SessionForm = ({recording, handleSNameChange, beginSession, stopSession}) 
   
 }
 
-const DisplayDetails = (props) => {
+const DisplayDetails = (props: {sessionName: String, history: any}) => {
   return (
     <div>
       <p>{props.sessionName}</p>
@@ -63,12 +63,12 @@ const App = () => {
   const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
-    let interval = null;
+    let interval = undefined;
     if (recording) {
       interval = setInterval(() => {
         setSeconds(seconds => seconds + 1);
-        setMinutes(minutes => parseInt(seconds / 60));
-        setHours(hours => parseInt(minutes / 60)) 
+        setMinutes(minutes => (seconds / 60));
+        setHours(hours => (minutes / 60)) 
 
       }, 1000);
     } else if (!recording && seconds !== 0) {
